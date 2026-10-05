@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    background:#080014;
+    color:white;
+}
+
+/* ---------- PAGE 1 ---------- */
+
+.page1{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+      radial-gradient(circle,#5b004f,#15001e 60%,#050008);
+}
+
+.heart{
+    position:relative;
+    width:180px;
+    height:180px;
+    background:#ff1744;
+    transform:rotate(-45deg);
+    box-shadow:
+      0 0 30px #ff1744,
+      0 0 80px #ff1744,
+      0 0 140px rgba(255,23,68,.5);
+    animation:heartBeat 1.2s infinite;
+}
+
+.heart:before,
+.heart:after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:#ff1744;
+    border-radius:50%;
+}
+
+.heart:before{
+    top:-90px;
+    left:0;
+}
+
+.heart:after{
+    left:90px;
+    top:0;
+}
+
+@keyframes heartBeat{
+    0%,100%{transform:rotate(-45deg) scale(1)}
+    50%{transform:rotate(-45deg) scale(1.12)}
+}
+
+/* Arrow */
+
+.arrow{
+    position:absolute;
+    width:430px;
+    height:12px;
+    background:#fff;
+    border-radius:10px;
+    left:-500px;
+    top:50%;
+    transform:translateY(-50%);
+    box-shadow:0 0 15px white,0 0 35px #00eaff;
+    z-index:5;
+}
+
+.arrow:after{
+    content:"";
+    position:absolute;
+    right:-2px;
+    top:-10px;
+    border-left:30px solid white;
+    border-top:16px solid transparent;
+    border-bottom:16px solid transparent;
+}
+
+.arrow:before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:-14px;
+    width:35px;
+    height:40px;
+    border-left:5px solid #00eaff;
+    border-top:5px solid #00eaff;
+    border-bottom:5px solid #00eaff;
+}
+
+.arrow.shoot{
+    animation:shootArrow 1.5s ease-in-out forwards;
+}
+
+@keyframes shootArrow{
+    0%{
+        left:-500px;
+    }
+    100%{
+        left:calc(100% + 500px);
+    }
+}
+
+.clickText{
+    position:absolute;
+    bottom:70px;
+    text-align:center;
+    width:100%;
+    font-size:16px;
+    opacity:.8;
+}
+
+/* ---------- PAGE 2 ---------- */
+
+.page2{
+    position:fixed;
+    inset:0;
+    display:none;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at center,#78004f 0%,#23002e 45%,#050008 100%);
+}
+
+.page2.show{
+    display:block;
+    animation:pageIn 1s ease;
+}
+
+@keyframes pageIn{
+    from{opacity:0;transform:scale(1.1)}
+    to{opacity:1;transform:scale(1)}
+}
+
+.title{
+    position:absolute;
+    top:10%;
+    width:100%;
+    text-align:center;
+    font-size:clamp(40px,10vw,90px);
+    font-weight:900;
+    color:#fff;
+    text-shadow:
+      0 0 10px #ff3cac,
+      0 0 30px #ff3cac,
+      0 0 60px #ff006e;
+    animation:titleGlow 1s infinite alternate;
+    z-index:10;
+}
+
+@keyframes titleGlow{
+    from{transform:scale(1)}
+    to{transform:scale(1.05)}
+}
+
+.wishes{
+    position:absolute;
+    inset:0;
+}
+
+.wish{
+    position:absolute;
+    padding:10px 18px;
+    border-radius:30px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    backdrop-filter:blur(5px);
+    box-shadow:0 0 20px rgba(255,0,150,.25);
+    animation:floatUp linear forwards;
+    white-space:nowrap;
+    font-weight:bold;
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(110vh) rotate(0deg);
+        opacity:0;
+    }
+    10%{opacity:1}
+    90%{opacity:1}
+    to{
+        transform:translateY(-120px) rotate(8deg);
+        opacity:0;
+    }
+}
+
+.confetti{
+    position:absolute;
+    width:9px;
+    height:18px;
+    top:-30px;
+    animation:confettiFall linear forwards;
+}
+
+@keyframes confettiFall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+
+.soundBtn{
+    position:absolute;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:13px 24px;
+    border:0;
+    border-radius:30px;
+    background:#ff2d75;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    box-shadow:0 0 20px #ff2d75;
+    z-index:20;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page1" id="page1">
+
+    <div class="heart"></div>
+
+    <div class="arrow" id="arrow"></div>
+
+    <div class="clickText">
+        ❤️ Wait for the magic... 🏹
+    </div>
+
+</div>
+
+
+<!-- PAGE 2 -->
+<div class="page2" id="page2">
+
+    <div class="title">
+        🎉 HAPPY BIRTHDAY 🎂
+    </div>
+
+    <div class="wishes" id="wishes"></div>
+
+    <button class="soundBtn" onclick="startMusic()">
+        🔊 Play Birthday Music
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   BIRTHDAY WISHES
+========================= */
+
+const wishes = [
+
+"🎂 Happy Birthday! Have an amazing day!",
+"🎉 Wishing you endless happiness!",
+"💖 May all your dreams come true!",
+"🥳 Have the best birthday ever!",
+"✨ Stay happy, stay blessed!",
+"🎁 May your life be full of beautiful moments!",
+"🌟 Keep shining always!",
+"💐 Wishing you love, laughter and happiness!",
+"❤️ Many many happy returns of the day!",
+"🎊 Enjoy every second of your special day!",
+"🫶 May this year bring you everything you wish for!",
+"🍫 Sending lots of love and sweet wishes!",
+"🌈 May your life always be colorful!",
+"👑 Today is your special day — enjoy it!",
+"💫 Keep smiling because your smile is precious!",
+"🎈 Another year, another beautiful chapter!",
+"🥰 Hope your birthday is as amazing as you are!",
+"🎀 Lots of happiness and lots of memories!",
+"🎂 Eat cake, smile more and enjoy!",
+"💝 May today become your favorite memory!",
+"🔥 Keep rocking and keep shining!",
+"🌸 Wishing you peace, love and success!",
+"🎁 You deserve all the happiness in the world!",
+"✨ Make this year unforgettable!",
+"💖 Sending you the biggest birthday hug!",
+"🥳 Party hard and smile harder!",
+"🌟 May every day bring you a reason to smile!",
+"🎉 Cheers to another wonderful year!",
+"❤️ Stay blessed and keep smiling!",
+"🎂 Happy Birthday once again!"
+];
+
+
+/* =========================
+   ARROW + PAGE CHANGE
+========================= */
+
+window.onload = function(){
+
+    setTimeout(() => {
+
+        document.getElementById("arrow")
+        .classList.add("shoot");
+
+        playArrowSound();
+
+    },1000);
+
+
+    setTimeout(() => {
+
+        document.getElementById("page1").style.display="none";
+
+        document.getElementById("page2")
+        .classList.add("show");
+
+        createWishes();
+        createConfetti();
+
+        // Try birthday melody
+        startMusic();
+
+    },2500);
+};
+
+
+/* =========================
+   WISH SPAM
+========================= */
+
+function createWishes(){
+
+    const container =
+        document.getElementById("wishes");
+
+    function addWish(){
+
+        const wish =
+            document.createElement("div");
+
+        wish.className="wish";
+
+        wish.innerText =
+            wishes[Math.floor(Math.random()*wishes.length)];
+
+        wish.style.left =
+            Math.random()*85+"%";
+
+        wish.style.fontSize =
+            (14 + Math.random()*10)+"px";
+
+        wish.style.animationDuration =
+            (5 + Math.random()*6)+"s";
+
+        container.appendChild(wish);
+
+        setTimeout(()=>{
+            wish.remove();
+        },11000);
+    }
+
+    // Start with lots of wishes
+    for(let i=0;i<20;i++){
+
+        setTimeout(
+            addWish,
+            i*180
+        );
+
+    }
+
+    // Continue forever
+    setInterval(addWish,500);
+}
+
+
+/* =========================
+   CONFETTI
+========================= */
+
+function createConfetti(){
+
+    for(let i=0;i<100;i++){
+
+        const c =
+            document.createElement("div");
+
+        c.className="confetti";
+
+        c.style.left =
+            Math.random()*100+"%";
+
+        c.style.animationDuration =
+            (3+Math.random()*5)+"s";
+
+        c.style.animationDelay =
+            Math.random()*4+"s";
+
+        c.style.background =
+            [
+                "#ff2d75",
+                "#ffd700",
+                "#00eaff",
+                "#7cff00",
+                "#ffffff"
+            ][Math.floor(Math.random()*5)];
+
+        document.getElementById("page2")
+        .appendChild(c);
+
+        setTimeout(()=>{
+            c.remove();
+        },10000);
+    }
+
+    setTimeout(createConfetti,7000);
+}
+
+
+/* =========================
+   ARROW SOUND
+========================= */
+
+function playArrowSound(){
+
+    try{
+
+        const audio =
+            new (window.AudioContext ||
+            window.webkitAudioContext)();
+
+        const oscillator =
+            audio.createOscillator();
+
+        const gain =
+            audio.createGain();
+
+        oscillator.type="sawtooth";
+
+        oscillator.frequency.setValueAtTime(
+            900,
+            audio.currentTime
+        );
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            120,
+            audio.currentTime+0.7
+        );
+
+        gain.gain.setValueAtTime(
+            .18,
+            audio.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audio.currentTime+.7
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.start();
+        oscillator.stop(audio.currentTime+.7);
+
+    }catch(e){}
+
+}
+
+
+/* =========================
+   BIRTHDAY MELODY
+========================= */
+
+let musicStarted=false;
+
+function startMusic(){
+
+    if(musicStarted) return;
+
+    musicStarted=true;
+
+    try{
+
+        const AudioCtx =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+        const audio =
+            new AudioCtx();
+
+        const notes = [
+            261.63,261.63,293.66,261.63,
+            349.23,329.63,
+            261.63,261.63,293.66,261.63,
+            392.00,349.23
+        ];
+
+        let time =
+            audio.currentTime + .1;
+
+        notes.forEach((freq,index)=>{
+
+            const osc =
+                audio.createOscillator();
+
+            const gain =
+                audio.createGain();
+
+            osc.type="sine";
+
+            osc.frequency.value=freq;
+
+            gain.gain.setValueAtTime(
+                0,
+                time
+            );
+
+            gain.gain.linearRampToValueAtTime(
+                .15,
+                time+.03
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                .001,
+                time+.45
+            );
+
+            osc.connect(gain);
+            gain.connect(audio.destination);
+
+            osc.start(time);
+            osc.stop(time+.5);
+
+            time += .48;
+
+        });
+
+    }catch(e){}
+
+}
+
+</script>
+
+</body>
+  </html>
